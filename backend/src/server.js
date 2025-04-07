@@ -1,10 +1,10 @@
-const dotenv = require('dotenv');
-const express = require('express');
+import express from 'express';
 
-dotenv.config();
+import config from './config/config.js';
+
+
 const app = express();
-const PORT = process.env.PORT || 8080;
-
+const PORT = config.port;
 
 app.get('/', async (req, res) => {
     return res.status(200).json({
