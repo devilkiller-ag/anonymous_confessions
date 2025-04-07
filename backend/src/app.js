@@ -1,6 +1,8 @@
 import cors from 'cors';
 import express from 'express';
 
+import { errorHandler } from './middleware/error-handler.js';
+
 
 const app = express();
 
@@ -15,5 +17,8 @@ app.use((req, res, next) => {
   req.io = app.get('io');
   next();
 });
+
+// MIDDLEWARE: To handle errors globally (should be the last one in the stack).
+app.use(errorHandler);
 
 export default app;
