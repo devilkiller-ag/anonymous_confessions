@@ -1,17 +1,18 @@
-import express from 'express';
+import http from 'http';
 
+import app from './app.js';
+import connectDB from './utils/db.js';
 import config from './config/config.js';
+import { initSocket } from './socket/index.js';
 
-
-const app = express();
 const PORT = config.port;
 
-app.get('/', async (req, res) => {
-    return res.status(200).json({
-        "message": "Server is up and running..."
-    });
-});
+const server = http.createServer(app);
+const io = initSocket(server);
+app.set('io', io);
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT} at http://localhost:${PORT}`);
-})
+connectDB().then(() => {
+  server.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+});
