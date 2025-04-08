@@ -17,5 +17,25 @@ export const createConfession = asyncWrapper(async (req, res) => {
   const confession = await confessionService.createConfession(message);
 
   req.io.emit('new_confession', confession);
-  res.status(200).json(confession);
+  res.status(201).json({
+    success: true,
+    data: confession
+  });
 });
+
+export const getConfessions = asyncWrapper(async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 50;
+
+  if (page < 1 || limit < 1) {
+    throw new ApiError(400, 'Page and limit must be positive integers');
+  }
+
+  const result = await confessionService.getConfessions(page, limit);
+  res.status(200).json({
+    success: true,
+    data: result.confessions,
+    meta: result.meta
+  });
+});
+
