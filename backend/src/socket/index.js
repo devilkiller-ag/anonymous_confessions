@@ -1,10 +1,11 @@
 import { Server } from 'socket.io';
+import config from '../config/config';
 
 
 export const initSocket = (server) => {
   const io = new Server(server, {
     cors: {
-      origin: '*',
+      origin: config.frontend_url,
     },
   });
 
