@@ -18,7 +18,7 @@ export const getConfessions = async (page = 1, limit = 20) => {
   const totalPages = Math.ceil(totalConfessions / limit);
 
   if (skip >= totalConfessions) {
-    throw new ApiError(404, 'Page number exceeds total pages.');
+    throw new ApiError(204, 'Page number exceeds total pages.');
   }
 
   const confessions = await Confession.find()

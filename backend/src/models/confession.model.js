@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import config from '../config/config.js';
 
 
 const confessionSchema = new mongoose.Schema({
@@ -18,7 +19,7 @@ const confessionSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now,
-    expires: 60
+    expires: config.confession_expiry / 1000,
   }
 }, { timestamps: true });
 

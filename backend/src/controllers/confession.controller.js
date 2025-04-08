@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import config from '../config/config.js';
 import ApiError from '../utils/api-error.js';
 import asyncWrapper from '../utils/async-wrapper.js';
 import * as confessionService from '../services/confession.service.js';
@@ -22,7 +23,7 @@ export const createConfession = asyncWrapper(async (req, res) => {
   setTimeout(() => {
     req.io.emit('confession_expired', confession._id);
 
-  }, 60 * 1000);
+  }, config.confession_expiry);
 
   res.status(201).json({
     success: true,
@@ -61,7 +62,7 @@ export const reactToConfession = asyncWrapper(async (req, res) => {
 
   const updatedConfession = await confessionService.reactToConfession(id, type);
 
-  req.io.emit('update_reaction', updated);
+  req.io.emit('update_reaction', updatedConfession);
   res.status(200).json({
     success: true,
     data: updatedConfession
