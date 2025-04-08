@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
+import { AnimatePresence } from 'framer-motion';
 import config from '@/config/config';
 import Navbar from '@/components/Navbar';
 import InputBox from '@/components/InputBox';
@@ -83,13 +84,15 @@ const App = () => {
             No confessions found.
           </div>
         ) : (
-          confessions.map((conf) => (
-            <Confession
-              key={conf._id}
-              confession={conf}
-              onReact={handleReaction}
-            />
-          ))
+          <AnimatePresence mode="popLayout">
+            {confessions.map((conf) => (
+              <Confession
+                key={conf._id}
+                confession={conf}
+                onReact={handleReaction}
+              />
+            ))}
+          </AnimatePresence>
         )}
       </div>
       <InputBox onSubmit={handleSubmitConfession} />
