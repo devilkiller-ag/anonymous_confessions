@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import ApiError from '../utils/api-error.js';
 import asyncWrapper from '../utils/async-wrapper.js';
 import * as confessionService from '../services/confession.service.js';
@@ -25,7 +26,7 @@ export const createConfession = asyncWrapper(async (req, res) => {
 
 export const getConfessions = asyncWrapper(async (req, res) => {
   const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 50;
+  const limit = parseInt(req.query.limit) || 20;
 
   if (page < 1 || limit < 1) {
     throw new ApiError(400, 'Page and limit must be positive integers');
@@ -39,3 +40,20 @@ export const getConfessions = asyncWrapper(async (req, res) => {
   });
 });
 
+export const reactToConfession = async (req, res) => {
+  const { id } = req.params;
+  const { type } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new ApiError(400, 'Invalid confession ID');
+  }
+
+  if (type !== 'upvote' && type != 'downvote') {
+    throw new ApiError(400, 'Reaction type must be either "upvote" or "downvote"');
+  }
+
+  const updated = await confessionService.reactToConfession(id, type);
+
+  req.io.emit('update_reaction', updated);
+  res.status(200).json(updated);
+}

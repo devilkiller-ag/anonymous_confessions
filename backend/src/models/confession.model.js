@@ -11,7 +11,7 @@ const confessionSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  downvote: {
+  downvotes: {
     type: Number,
     default: 0
   }
