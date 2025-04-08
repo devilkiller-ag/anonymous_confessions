@@ -12,7 +12,7 @@ const InputBox = ({ onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex items-center border-t p-3 bg-white">
+    <form onSubmit={handleSubmit} className="flex items-center border-t p-3">
       <input
         type="text"
         className="flex-1 border border-gray-300 rounded-full px-4 py-2 mr-2 focus:outline-none"

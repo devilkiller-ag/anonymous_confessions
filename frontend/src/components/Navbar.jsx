@@ -1,3 +1,5 @@
+import { FaGithub } from 'react-icons/fa';
+
 const Navbar = () => {
   return (
     <div className="w-full bg-gray-100 text-black p-4 shadow-md text-xl font-semibold flex items-center justify-between rounded-lg">
@@ -12,7 +14,7 @@ const Navbar = () => {
           href='https://github.com/devilkiller-ag/anonymous_confessions'
           target='_blank'
         >
-          GitHub
+          <span className='flex items-center gap-1 font-light text-sm'><FaGithub /> GitHub</span>
         </a>
       </div>
     </div>
