@@ -40,7 +40,7 @@ export const getConfessions = asyncWrapper(async (req, res) => {
   });
 });
 
-export const reactToConfession = async (req, res) => {
+export const reactToConfession = asyncWrapper(async (req, res) => {
   const { id } = req.params;
   const { type } = req.body;
 
@@ -48,12 +48,16 @@ export const reactToConfession = async (req, res) => {
     throw new ApiError(400, 'Invalid confession ID');
   }
 
-  if (type !== 'upvote' && type != 'downvote') {
-    throw new ApiError(400, 'Reaction type must be either "upvote" or "downvote"');
+  const validTypes = new Set(['upvote', 'downvote']);
+  if (!validTypes.has(type)) {
+    throw new ApiError(400, 'Reaction type must be "upvote" or "downvote"');
   }
 
-  const updated = await confessionService.reactToConfession(id, type);
+  const updatedConfession = await confessionService.reactToConfession(id, type);
 
   req.io.emit('update_reaction', updated);
-  res.status(200).json(updated);
-}
+  res.status(200).json({
+    success: true,
+    data: updatedConfession
+  });
+});

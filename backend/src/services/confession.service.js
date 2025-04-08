@@ -3,7 +3,13 @@ import Confession from '../models/confession.model.js';
 
 
 export const createConfession = async (message) => {
-  return await Confession.create({ message });
+  const confession = await Confession.create({ message });
+
+  if (!confession) {
+    throw new ApiError(500, 'Failed to create confession');
+  }
+
+  return confession;
 }
 
 export const getConfessions = async (page = 1, limit = 20) => {
@@ -15,12 +21,11 @@ export const getConfessions = async (page = 1, limit = 20) => {
     throw new ApiError(404, 'Page number exceeds total pages.');
   }
 
-
   const confessions = await Confession.find()
     .sort({ createdAt: -1 })
     .skip(skip)
-    .limit(limit);
-
+    .limit(limit)
+    .lean();
 
   return {
     confessions,

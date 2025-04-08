@@ -1,7 +1,7 @@
 {
-  "name": "backend",
+  "name": "anonymous-confessions-backend",
   "version": "1.0.0",
-  "description": "Confessions API",
+  "description": "Anonymous Confessions API",
   "main": "src/server.js",
   "type": "module",
   "scripts": {
