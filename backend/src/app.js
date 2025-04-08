@@ -3,16 +3,12 @@ import express from 'express';
 
 import { errorHandler } from './middleware/error-handler.js';
 import confessionRoutes from './routes/confession.routes.js';
-import config from './config/config.js';
 
 
 const app = express();
 
 // MIDDLEWARE: To enable CORS (Cross-Origin Resource Sharing)
-app.use(cors({
-  origin: config.corsOrigin,
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-}));
+app.use(cors());
 
 // MIDDLEWARE: To parse incoming requests with JSON payloads
 app.use(express.json());
