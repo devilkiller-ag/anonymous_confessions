@@ -18,6 +18,12 @@ export const createConfession = asyncWrapper(async (req, res) => {
   const confession = await confessionService.createConfession(message);
 
   req.io.emit('new_confession', confession);
+
+  setTimeout(() => {
+    req.io.emit('confession_expired', confession._id);
+
+  }, 60 * 1000);
+
   res.status(201).json({
     success: true,
     data: confession

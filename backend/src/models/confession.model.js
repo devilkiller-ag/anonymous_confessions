@@ -14,6 +14,11 @@ const confessionSchema = new mongoose.Schema({
   downvotes: {
     type: Number,
     default: 0
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    expires: 60
   }
 }, { timestamps: true });
 
