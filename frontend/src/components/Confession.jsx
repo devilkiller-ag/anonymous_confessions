@@ -48,13 +48,13 @@ const Confession = ({ confession, onReact }) => {
                 onClick={() => onReact(confession._id, 'upvote')}
                 className='hover:text-green-500 transition'
               >
-                <span className='flex items-center gap-1'><BiUpvote /> {confession.upvotes}</span>
+                <span className='flex items-center gap-1 cursor-pointer'><BiUpvote /> {confession.upvotes}</span>
               </button>
               <button
                 onClick={() => onReact(confession._id, 'downvote')}
                 className='hover:text-red-500 transition'
               >
-                <span className='flex items-center gap-1'><BiDownvote /> {confession.downvotes}</span>
+                <span className='flex items-center gap-1 cursor-pointer'><BiDownvote /> {confession.downvotes}</span>
               </button>
             </div>
           </div>
